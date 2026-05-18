@@ -5,6 +5,7 @@ import model.Barang;
 import java.util.List;
 
 public class BarangController {
+
     private final BarangDAO dao = new BarangDAO();
 
     public List<Barang> getAll() {

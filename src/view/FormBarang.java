@@ -13,19 +13,22 @@ import javax.swing.JOptionPane;
 public class FormBarang extends javax.swing.JFrame {
 
     private int selectedId = -1;
-    
-    private controller.BarangController controller = new controller.BarangController();
+
+private controller.BarangController controller =
+        new controller.BarangController();
     
     public FormBarang() {
-        initComponents();
-        loadTable();
-    }
+    initComponents();
+    loadTable();
+    tableBarang.setAutoCreateRowSorter(true);
+}
     
     private void loadTable() {
     new javax.swing.SwingWorker<java.util.List<model.Barang>, Void>() {
+
         @Override
         protected java.util.List<model.Barang> doInBackground() {
-            return controller.getAll(); // ambil data di background thread
+            return controller.getAll();
         }
 
         @Override
@@ -35,20 +38,25 @@ public class FormBarang extends javax.swing.JFrame {
 
                 javax.swing.table.DefaultTableModel model =
                         new javax.swing.table.DefaultTableModel();
+
                 model.addColumn("ID");
                 model.addColumn("Nama");
                 model.addColumn("Stok");
 
                 for (model.Barang b : list) {
                     model.addRow(new Object[]{
-                        b.getId(), b.getNama(), b.getStok()
+                        b.getId(),
+                        b.getNama(),
+                        b.getStok()
                     });
                 }
 
                 tableBarang.setModel(model);
+
             } catch (Exception e) {
-                javax.swing.JOptionPane.showMessageDialog(
-                    FormBarang.this, "Gagal load data: " + e.getMessage()
+                JOptionPane.showMessageDialog(
+                        FormBarang.this,
+                        "Gagal load data: " + e.getMessage()
                 );
             }
         }
@@ -95,6 +103,7 @@ public class FormBarang extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tableBarang);
 
         jLabel1.setText("Nama ");
+        jLabel1.setToolTipText("");
 
         txtNama.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -196,6 +205,11 @@ public class FormBarang extends javax.swing.JFrame {
         return;
     }
 
+    if (stok < 0) {
+            JOptionPane.showMessageDialog(this, "Stok tidak boleh negatif!");
+            return;
+        }
+    
     if (controller.insert(nama, stok)) {
         JOptionPane.showMessageDialog(this, "Data berhasil ditambahkan!");
 
@@ -217,7 +231,7 @@ public class FormBarang extends javax.swing.JFrame {
     }//GEN-LAST:event_txtStokActionPerformed
 
     private void tableBarangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableBarangMouseClicked
-        int row = tableBarang.getSelectedRow();
+    int row = tableBarang.getSelectedRow();
 
     selectedId = Integer.parseInt(tableBarang.getValueAt(row, 0).toString());
     txtNama.setText(tableBarang.getValueAt(row, 1).toString());

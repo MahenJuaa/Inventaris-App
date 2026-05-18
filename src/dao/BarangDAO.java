@@ -29,8 +29,8 @@ public class BarangDAO {
 
         return list;
     }
-    
-     public boolean insert(Barang b) {
+
+    public boolean insert(Barang b) {
         try {
             Connection c = KoneksiDB.getConnection();
             String sql = "INSERT INTO barang (nama, stok) VALUES (?, ?)";
@@ -47,40 +47,40 @@ public class BarangDAO {
             return false;
         }
     }
-     
-     public boolean update(Barang b) {
-    try {
-        Connection c = KoneksiDB.getConnection();
-        String sql = "UPDATE barang SET nama=?, stok=? WHERE id=?";
-        PreparedStatement ps = c.prepareStatement(sql);
 
-        ps.setString(1, b.getNama());
-        ps.setInt(2, b.getStok());
-        ps.setInt(3, b.getId());
+    public boolean update(Barang b) {
+        try {
+            Connection c = KoneksiDB.getConnection();
+            String sql = "UPDATE barang SET nama=?, stok=? WHERE id=?";
+            PreparedStatement ps = c.prepareStatement(sql);
 
-        ps.executeUpdate();
-        return true;
+            ps.setString(1, b.getNama());
+            ps.setInt(2, b.getStok());
+            ps.setInt(3, b.getId());
 
-    } catch (Exception e) {
-        e.printStackTrace();
-        return false;
+            ps.executeUpdate();
+            return true;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
-   }
-     
-     public boolean delete(int id) {
-    try {
-        Connection c = KoneksiDB.getConnection();
-        String sql = "DELETE FROM barang WHERE id=?";
-        PreparedStatement ps = c.prepareStatement(sql);
 
-        ps.setInt(1, id);
-        ps.executeUpdate();
+    public boolean delete(int id) {
+        try {
+            Connection c = KoneksiDB.getConnection();
+            String sql = "DELETE FROM barang WHERE id=?";
+            PreparedStatement ps = c.prepareStatement(sql);
 
-        return true;
+            ps.setInt(1, id);
+            ps.executeUpdate();
 
-    } catch (Exception e) {
-        e.printStackTrace();
-        return false;
+            return true;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
-   }
 }
